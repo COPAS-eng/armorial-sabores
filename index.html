@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Armorial Sabores | Self-Service</title>
+  <link rel="icon" type="image/png" href="logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --gold:#C8963E;
+      --gold-light:#D4A853;
+      --terracotta:#C2653A;
+      --burgundy:#6B1D2A;
+      --burgundy-dark:#3D1210;
+      --cream:#1A1A1A;
+      --warm-white:#222222;
+      --charcoal:#0D0D0D;
+      --text:#E8E0D4;
+      --text-light:#9A9A9A;
+      --ease-out-quint:cubic-bezier(.23,1,.32,1);
+      --ease-in-out:cubic-bezier(.645,.045,.355,1);
+    }
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--cream);
+      color:var(--text);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    ::selection{background:var(--gold);color:var(--burgundy-dark)}
+
+    /* ===== PRELOADER ===== */
+    .preloader{
+      position:fixed;inset:0;z-index:9999;
+      background:#0D0D0D;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:1.5rem;
+    }
+    .preloader-logo{
+      width:140px;height:140px;
+      border-radius:50%;
+      border:3px solid var(--gold);
+      display:flex;align-items:center;justify-content:center;
+      animation:pulse-preload 1.5s ease-in-out infinite;
+      overflow:hidden;
+    }
+    .preloader-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    @keyframes pulse-preload{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.7}}
+    .preloader-text{
+      font-family:'Playfair Display',serif;
+      color:var(--gold);font-size:1.4rem;letter-spacing:.3em;
+      text-transform:uppercase;
+    }
+    .preloader-bar{
+      width:200px;height:2px;background:rgba(255,255,255,.15);
+      border-radius:2px;overflow:hidden;
+    }
+    .preloader-bar-fill{
+      height:100%;background:var(--gold);
+      width:0%;border-radius:2px;
+      animation:preload-fill 2s var(--ease-out-quint) forwards;
+    }
+    @keyframes preload-fill{to{width:100%}}
+
+    /* ===== CURSOR ===== */
+    .cursor{
+      width:20px;height:20px;
+      border:2px solid var(--gold);
+      border-radius:50%;
+      position:fixed;pointer-events:none;z-index:9998;
+      transition:width .3s,height .3s,border-color .3s,background .3s;
+      transform:translate(-50%,-50%);
+      mix-blend-mode:difference;
+    }
+    .cursor.active{width:50px;height:50px;background:rgba(212,168,83,.15)}
+    @media(pointer:coarse){.cursor{display:none}}
+
+    /* ===== NAV ===== */
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:1.2rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;
+      transition:background .4s,padding .4s,box-shadow .4s;
+    }
+    .nav.scrolled{
+      background:rgba(13,13,13,.95);
+      backdrop-filter:blur(20px);
+      padding:.8rem 3rem;
+      box-shadow:0 4px 30px rgba(0,0,0,.5);
+    }
+    .nav-logo{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+    .nav-logo img{width:52px;height:52px;border-radius:50%;transition:transform .4s var(--ease-out-quint);border:2px solid rgba(212,168,83,.3)}
+    .nav-logo:hover img{transform:rotate(10deg) scale(1.1)}
+    .nav-logo-text{
+      font-family:'Playfair Display',serif;
+      color:var(--gold);font-size:1.3rem;font-weight:700;
+      letter-spacing:.15em;
+    }
+    .nav-links{display:flex;gap:2.5rem;align-items:center}
+    .nav-link{
+      color:var(--text);text-decoration:none;
+      font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;
+      font-weight:500;position:relative;
+      transition:color .3s;
+    }
+    .nav-link::after{
+      content:'';position:absolute;bottom:-4px;left:0;
+      width:0;height:2px;background:var(--gold);
+      transition:width .4s var(--ease-out-quint);
+    }
+    .nav-link:hover{color:var(--gold)}
+    .nav-link:hover::after{width:100%}
+    .nav-cta{
+      padding:.7rem 1.8rem;
+      background:var(--gold);color:var(--burgundy-dark);
+      text-decoration:none;border-radius:50px;
+      font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+      transition:all .4s var(--ease-out-quint);
+      position:relative;overflow:hidden;
+    }
+    .nav-cta::before{
+      content:'';position:absolute;inset:0;
+      background:#fff;
+      transform:translateX(-101%);
+      transition:transform .4s var(--ease-out-quint);
+      border-radius:50px;
+    }
+    .nav-cta:hover{color:var(--burgundy-dark)}
+    .nav-cta:hover::before{transform:translateX(0)}
+    .nav-cta span{position:relative;z-index:1}
+    .nav-hamburger{
+      display:none;flex-direction:column;gap:5px;
+      cursor:pointer;padding:5px;
+    }
+    .nav-hamburger span{
+      width:25px;height:2px;background:var(--text);
+      transition:all .3s;border-radius:2px;
+    }
+
+    /* ===== HERO ===== */
+    .hero{
+      height:100vh;position:relative;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+    }
+    .hero-bg img{
+      width:100%;height:100%;object-fit:cover;
+      transform:scale(1.1);
+    }
+    .hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(
+        135deg,
+        rgba(13,13,13,.88) 0%,
+        rgba(26,26,26,.55) 50%,
+        rgba(194,101,58,.65) 100%
+      );
+    }
+    .hero-content{
+      position:relative;z-index:2;text-align:center;
+      max-width:900px;padding:0 2rem;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:.6rem;
+      padding:.6rem 1.5rem;
+      border:1px solid rgba(212,168,83,.4);
+      border-radius:50px;
+      color:var(--gold-light);
+      font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;
+      font-weight:500;
+      opacity:0;
+    }
+    .hero-badge-dot{
+      width:6px;height:6px;background:var(--gold);
+      border-radius:50%;animation:blink 2s ease-in-out infinite;
+    }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(3rem,8vw,7rem);
+      font-weight:900;color:var(--text);
+      line-height:1;margin:1.5rem 0;
+      opacity:0;
+    }
+    .hero-title span{
+      display:block;
+      background:linear-gradient(135deg,var(--gold),var(--gold-light),#fff,var(--gold));
+      background-size:200% 200%;
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:shimmer 4s ease-in-out infinite;
+    }
+    @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    .hero-sub{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(1.1rem,2.5vw,1.6rem);
+      color:rgba(232,224,212,.7);
+      font-style:italic;font-weight:600;
+      margin-bottom:2.5rem;
+      opacity:0;
+    }
+    .hero-actions{
+      display:flex;gap:1rem;justify-content:center;
+      flex-wrap:wrap;
+      opacity:0;
+    }
+    .btn{
+      padding:1rem 2.5rem;
+      border-radius:50px;
+      font-size:.85rem;font-weight:600;
+      letter-spacing:.12em;text-transform:uppercase;
+      text-decoration:none;
+      transition:all .4s var(--ease-out-quint);
+      position:relative;overflow:hidden;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:var(--gold);color:var(--burgundy-dark);
+      border:2px solid var(--gold);
+    }
+    .btn-primary::before{
+      content:'';position:absolute;inset:0;
+      background:var(--burgundy-dark);
+      transform:translateY(101%);
+      transition:transform .4s var(--ease-out-quint);
+      border-radius:50px;
+    }
+    .btn-primary:hover{color:var(--gold);border-color:var(--gold)}
+    .btn-primary:hover::before{transform:translateY(0)}
+    .btn-primary span{position:relative;z-index:1}
+    .btn-outline{
+      background:transparent;color:var(--text);
+      border:2px solid rgba(232,224,212,.3);
+    }
+    .btn-outline:hover{
+      border-color:var(--gold);color:var(--gold);
+      background:rgba(212,168,83,.1);
+    }
+    .hero-scroll{
+      position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+      color:rgba(232,224,212,.5);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+    }
+    .hero-scroll-line{
+      width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);
+      animation:scroll-line 2s ease-in-out infinite;
+    }
+    @keyframes scroll-line{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+    /* ===== FLOATING ELEMENTS ===== */
+    .float-element{
+      position:absolute;
+      border-radius:50%;
+      pointer-events:none;
+    }
+    .float-1{
+      width:300px;height:300px;
+      background:radial-gradient(circle,rgba(212,168,83,.08),transparent);
+      top:20%;right:-100px;
+      animation:float 8s ease-in-out infinite;
+    }
+    .float-2{
+      width:200px;height:200px;
+      background:radial-gradient(circle,rgba(107,29,42,.1),transparent);
+      bottom:20%;left:-50px;
+      animation:float 6s ease-in-out infinite reverse;
+    }
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(5deg)}}
+
+    /* ===== SECTION STYLES ===== */
+    section{padding:5rem 2rem}
+    .section-label{
+      font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--gold);font-weight:600;
+      display:flex;align-items:center;gap:1rem;
+      margin-bottom:1rem;
+    }
+    .section-label::before{
+      content:'';width:40px;height:1px;background:var(--gold);
+    }
+    .section-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,5vw,3.5rem);
+      font-weight:900;line-height:1.1;
+      color:var(--text);
+    }
+    .section-title span{
+      display:block;
+      color:var(--gold);
+      font-style:italic;font-weight:400;
+      font-family:'Cormorant Garamond',serif;
+      font-size:.6em;
+    }
+
+    /* ===== ABOUT ===== */
+    .about{
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:3rem;max-width:1300px;margin:0 auto;
+      align-items:center;
+    }
+    .about-image{
+      position:relative;border-radius:20px;overflow:hidden;
+    }
+    .about-image img{
+      width:100%;height:400px;object-fit:cover;
+      transition:transform .8s var(--ease-out-quint);
+    }
+    .about-image:hover img{transform:scale(1.05)}
+    .about-image-overlay{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:2rem;
+      background:linear-gradient(to top,rgba(74,16,25,.9),transparent);
+      display:flex;align-items:flex-end;
+    }
+    .about-image-stat{
+      color:var(--text);
+    }
+    .about-image-stat strong{
+      font-family:'Playfair Display',serif;
+      font-size:3rem;display:block;line-height:1;color:var(--gold);
+    }
+    .about-image-stat span{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;opacity:.7}
+    .about-text .section-title{margin-bottom:1.5rem}
+    .about-desc{
+      font-size:1.05rem;line-height:1.8;color:var(--text-light);
+      margin-bottom:2rem;
+    }
+    .about-features{
+      display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+      margin-top:2rem;
+    }
+    .about-feature{
+      display:flex;align-items:center;gap:1rem;
+      padding:1rem 1.2rem;
+      background:#1E1E1E;
+      border-radius:12px;
+      transition:all .3s var(--ease-out-quint);
+      border:1px solid rgba(255,255,255,.05);
+    }
+    .about-feature:hover{
+      background:var(--burgundy);
+      color:var(--text);
+      transform:translateX(8px);
+    }
+    .about-feature:hover .about-feature-icon{color:var(--gold)}
+    .about-feature-icon{
+      font-size:1.5rem;
+      transition:color .3s;
+    }
+    .about-feature-text{
+      font-size:.85rem;font-weight:500;
+      letter-spacing:.05em;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section{
+      background:var(--charcoal);
+      padding:5rem 2rem;
+      position:relative;
+      overflow:hidden;
+    }
+    .gallery-section::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .gallery-header{
+      text-align:center;margin-bottom:2.5rem;
+    }
+    .gallery-header .section-title{color:var(--text)}
+    .gallery-header .section-title span{color:var(--gold-light)}
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      grid-template-rows:repeat(2,220px);
+      gap:1rem;
+      max-width:1300px;margin:0 auto;
+    }
+    .gallery-item{
+      border-radius:16px;overflow:hidden;
+      position:relative;cursor:pointer;
+    }
+    .gallery-item img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .8s var(--ease-out-quint);
+    }
+    .gallery-item:hover img{transform:scale(1.1)}
+    .gallery-item-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(74,16,25,.8),transparent 60%);
+      opacity:0;transition:opacity .4s;
+      display:flex;align-items:flex-end;padding:1.5rem;
+    }
+    .gallery-item:hover .gallery-item-overlay{opacity:1}
+    .gallery-item-text{
+      color:var(--text);font-family:'Playfair Display',serif;
+      font-size:1.1rem;
+    }
+    .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+    .gallery-item:nth-child(4){grid-column:span 2}
+
+    /* ===== MENU ===== */
+    .menu-section{max-width:1300px;margin:0 auto}
+    .menu-header{text-align:center;margin-bottom:4rem}
+    .menu-categories{
+      display:flex;justify-content:center;gap:1rem;
+      margin-top:2rem;flex-wrap:wrap;
+    }
+    .menu-cat{
+      padding:.6rem 1.5rem;border-radius:50px;
+      border:1px solid rgba(200,150,62,.3);
+      background:transparent;
+      font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--text-light);cursor:pointer;
+      transition:all .3s var(--ease-out-quint);
+      font-family:'Inter',sans-serif;font-weight:500;
+    }
+    .menu-cat.active,.menu-cat:hover{
+      background:var(--gold);color:#0D0D0D;
+      border-color:var(--gold);
+    }
+    .menu-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;margin-top:2rem;
+    }
+    .menu-card{
+      background:#1E1E1E;
+      border-radius:20px;overflow:hidden;
+      transition:all .5s var(--ease-out-quint);
+      position:relative;
+      border:1px solid rgba(255,255,255,.05);
+    }
+    .menu-card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 30px 60px rgba(107,29,42,.15);
+    }
+    .menu-card-img{
+      height:180px;overflow:hidden;position:relative;
+    }
+    .menu-card-img img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .8s var(--ease-out-quint);
+    }
+    .menu-card:hover .menu-card-img img{transform:scale(1.1)}
+    .menu-card-badge{
+      position:absolute;top:1rem;left:1rem;
+      padding:.4rem 1rem;border-radius:50px;
+      background:var(--gold);color:var(--burgundy-dark);
+      font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    }
+    .menu-card-body{padding:1.5rem}
+    .menu-card-title{
+      font-family:'Playfair Display',serif;
+      font-size:1.3rem;font-weight:700;
+      margin-bottom:.5rem;
+    }
+    .menu-card-desc{
+      font-size:.9rem;color:var(--text-light);
+      line-height:1.6;
+    }
+    .menu-card-price{
+      display:none;
+    }
+
+    /* ===== SPECIALS ===== */
+    .specials{
+      background:linear-gradient(135deg,#1A1A1A,#0D0D0D);
+      padding:5rem 2rem;
+      position:relative;overflow:hidden;
+    }
+    .specials::before{
+      content:'';position:absolute;
+      width:600px;height:600px;
+      border:1px solid rgba(212,168,83,.1);
+      border-radius:50%;
+      top:-200px;right:-200px;
+      animation:rotate-slow 30s linear infinite;
+    }
+    .specials::after{
+      content:'';position:absolute;
+      width:400px;height:400px;
+      border:1px solid rgba(212,168,83,.08);
+      border-radius:50%;
+      bottom:-100px;left:-100px;
+      animation:rotate-slow 20s linear infinite reverse;
+    }
+    @keyframes rotate-slow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .specials-inner{
+      max-width:1300px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;
+      gap:3rem;align-items:center;
+    }
+    .specials-text .section-label{color:var(--gold-light)}
+    .specials-text .section-label::before{background:var(--gold-light)}
+    .specials-text .section-title{color:var(--text)}
+    .specials-text .section-title span{color:var(--gold-light)}
+    .specials-desc{
+      color:rgba(232,224,212,.7);
+      font-size:1.05rem;line-height:1.8;
+      margin:1.2rem 0 1.5rem;
+    }
+    .specials-list{display:flex;flex-direction:column;gap:1rem}
+    .specials-item{
+      display:flex;align-items:center;gap:1.2rem;
+      padding:1rem 1.5rem;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(212,168,83,.15);
+      border-radius:14px;
+      transition:all .4s var(--ease-out-quint);
+    }
+    .specials-item:hover{
+      background:rgba(212,168,83,.1);
+      border-color:var(--gold);
+      transform:translateX(10px);
+    }
+    .specials-item-icon{font-size:1.8rem}
+    .specials-item-text{
+      color:var(--text);font-weight:500;
+      font-size:.95rem;
+    }
+    .specials-item-text small{
+      display:block;color:var(--gold-light);
+      font-size:.75rem;margin-top:.2rem;font-weight:400;
+    }
+    .specials-images{
+      display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+    }
+    .specials-img{
+      border-radius:16px;overflow:hidden;
+      position:relative;
+    }
+    .specials-img:nth-child(2){margin-top:2rem}
+    .specials-img img{
+      width:100%;height:200px;object-fit:cover;
+      transition:transform .8s var(--ease-out-quint);
+    }
+    .specials-img:hover img{transform:scale(1.08)}
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials{
+      max-width:1300px;margin:0 auto;
+    }
+    .testimonials-header{text-align:center;margin-bottom:2.5rem}
+    .testimonials-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+    }
+    .testimonial-card{
+      padding:2rem;
+      background:#1E1E1E;
+      border-radius:20px;
+      transition:all .4s var(--ease-out-quint);
+      position:relative;
+      border:1px solid rgba(255,255,255,.05);
+    }
+    .testimonial-card::before{
+      content:'"';position:absolute;top:1rem;right:1.5rem;
+      font-family:'Playfair Display',serif;
+      font-size:5rem;color:rgba(212,168,83,.15);
+      line-height:1;
+    }
+    .testimonial-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 20px 50px rgba(107,29,42,.1);
+    }
+    .testimonial-stars{
+      color:var(--gold);font-size:.9rem;
+      letter-spacing:.2em;margin-bottom:1rem;
+    }
+    .testimonial-text{
+      font-size:1rem;line-height:1.7;
+      color:var(--text);
+      margin-bottom:1.5rem;
+      font-style:italic;
+    }
+    .testimonial-author{
+      display:flex;align-items:center;gap:1rem;
+    }
+    .testimonial-avatar{
+      width:48px;height:48px;border-radius:50%;
+      background:linear-gradient(135deg,var(--burgundy),var(--gold));
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text);font-weight:700;font-size:1rem;
+    }
+    .testimonial-name{font-weight:600;font-size:.9rem}
+    .testimonial-role{font-size:.75rem;color:var(--text-light);margin-top:.2rem}
+
+    /* ===== CONTACT ===== */
+    .contact{
+      background:var(--charcoal);
+      padding:5rem 2rem;
+      position:relative;
+    }
+    .contact::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .contact-inner{
+      max-width:1300px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:3rem;
+    }
+    .contact-text .section-title{color:var(--text)}
+    .contact-text .section-title span{color:var(--gold-light)}
+    .contact-desc{
+      color:rgba(232,224,212,.6);font-size:1.05rem;line-height:1.8;
+      margin:1.5rem 0 2.5rem;
+    }
+    .contact-info{display:flex;flex-direction:column;gap:1.5rem}
+    .contact-info-item{
+      display:flex;align-items:flex-start;gap:1.2rem;
+      padding:1.2rem 1.5rem;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;
+      transition:all .3s var(--ease-out-quint);
+    }
+    .contact-info-item:hover{
+      background:rgba(212,168,83,.08);
+      border-color:rgba(212,168,83,.2);
+      transform:translateX(8px);
+    }
+    .contact-info-icon{font-size:1.5rem;margin-top:.2rem}
+    .contact-info-label{
+      font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+      color:var(--gold-light);margin-bottom:.3rem;
+    }
+    .contact-info-value{color:#FFFFFF;font-size:1rem}
+    .contact-form{
+      display:flex;flex-direction:column;gap:1.2rem;
+    }
+    .form-group{position:relative}
+    .form-group input,.form-group textarea{
+      width:100%;padding:1rem 1.5rem;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:14px;
+      color:var(--text);
+      font-family:'Inter',sans-serif;
+      font-size:.95rem;
+      transition:all .3s var(--ease-out-quint);
+      outline:none;
+    }
+    .form-group input::placeholder,.form-group textarea::placeholder{
+      color:rgba(255,255,255,.3);
+    }
+    .form-group input:focus,.form-group textarea:focus{
+      border-color:var(--gold);
+      background:rgba(212,168,83,.05);
+    }
+    .form-group textarea{resize:vertical;min-height:120px}
+    .form-submit{
+      padding:1rem 2.5rem;
+      background:var(--gold);color:var(--burgundy-dark);
+      border:none;border-radius:50px;
+      font-size:.85rem;font-weight:600;
+      letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;
+      transition:all .4s var(--ease-out-quint);
+      font-family:'Inter',sans-serif;
+      align-self:flex-start;
+    }
+    .form-submit:hover{
+      background:#fff;
+      transform:translateY(-3px);
+      box-shadow:0 10px 30px rgba(212,168,83,.3);
+    }
+
+    /* ===== MAP ===== */
+    .map-section{
+      height:400px;position:relative;
+      overflow:hidden;
+    }
+    .map-section iframe{
+      width:100%;height:100%;border:0;
+      filter:grayscale(.3) contrast(1.1);
+    }
+    .map-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to bottom,transparent 70%,var(--charcoal));
+      pointer-events:none;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer{
+      background:var(--burgundy-dark);
+      padding:3.5rem 2rem 1.5rem;
+      position:relative;
+    }
+    .footer::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--terracotta),var(--gold),var(--terracotta));
+    }
+    .footer-inner{
+      max-width:1300px;margin:0 auto;
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:3rem;
+    }
+    .footer-brand .nav-logo-text{font-size:1.5rem}
+    .footer-desc{
+      color:rgba(232,224,212,.5);
+      font-size:.9rem;line-height:1.7;
+      margin-top:1rem;
+    }
+    .footer-social{
+      display:flex;gap:.8rem;margin-top:1.5rem;
+    }
+    .footer-social a{
+      width:42px;height:42px;
+      border:1px solid rgba(212,168,83,.2);
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--gold);
+      text-decoration:none;
+      font-size:.9rem;
+      transition:all .3s var(--ease-out-quint);
+    }
+    .footer-social a:hover{
+      background:var(--gold);color:var(--burgundy-dark);
+      transform:translateY(-3px);
+    }
+    .footer-title{
+      font-family:'Playfair Display',serif;
+      color:var(--text);font-size:1.1rem;
+      margin-bottom:1.5rem;
+    }
+    .footer-links{display:flex;flex-direction:column;gap:.8rem}
+    .footer-link{
+      color:rgba(232,224,212,.5);
+      text-decoration:none;font-size:.85rem;
+      transition:all .3s;
+    }
+    .footer-link:hover{color:var(--gold);transform:translateX(5px)}
+    .footer-bottom{
+      max-width:1300px;margin:3rem auto 0;
+      padding-top:2rem;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:space-between;
+      color:rgba(232,224,212,.3);font-size:.8rem;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-section{
+      padding:2rem 0;
+      background:var(--terracotta);
+      overflow:hidden;
+    }
+    .marquee{
+      display:flex;animation:marquee 25s linear infinite;
+    }
+    .marquee-item{
+      flex-shrink:0;
+      padding:0 3rem;
+      font-family:'Playfair Display',serif;
+      font-size:1.3rem;
+      color:rgba(212,168,83,.4);
+      white-space:nowrap;
+      display:flex;align-items:center;gap:2rem;
+    }
+    .marquee-item .dot{
+      width:6px;height:6px;background:var(--gold);
+      border-radius:50%;opacity:.4;
+    }
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top{
+      position:fixed;bottom:2rem;right:2rem;
+      width:50px;height:50px;
+      background:var(--gold);color:#0D0D0D;
+      border:none;border-radius:50%;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.2rem;
+      opacity:0;transform:translateY(20px);
+      transition:all .4s var(--ease-out-quint);
+      z-index:99;
+      box-shadow:0 4px 20px rgba(200,150,62,.3);
+    }
+    .back-to-top.visible{opacity:1;transform:translateY(0)}
+    .back-to-top:hover{
+      background:var(--gold);color:var(--burgundy-dark);
+      transform:translateY(-5px);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:1024px){
+      .about,.specials-inner,.contact-inner{grid-template-columns:1fr;gap:3rem}
+      .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+      .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 1}
+      .menu-grid{grid-template-columns:repeat(2,1fr)}
+      .testimonials-grid{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      .nav-links{display:none}
+      .nav-hamburger{display:flex}
+      .menu-grid{grid-template-columns:1fr}
+      .gallery-grid{grid-template-columns:1fr}
+      .gallery-item:nth-child(1){grid-column:span 1}
+      .about-features{grid-template-columns:1fr}
+      .specials-images{grid-template-columns:1fr}
+      .footer-inner{grid-template-columns:1fr}
+      section{padding:4rem 1.5rem}
+    }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu{
+      position:fixed;inset:0;z-index:200;
+      background:var(--burgundy-dark);
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      gap:2rem;
+      transform:translateX(100%);
+      transition:transform .6s var(--ease-out-quint);
+    }
+    .mobile-menu.open{transform:translateX(0)}
+    .mobile-menu-close{
+      position:absolute;top:1.5rem;right:2rem;
+      background:none;border:none;
+      color:var(--gold);font-size:2rem;cursor:pointer;
+      transition:transform .3s;
+    }
+    .mobile-menu-close:hover{transform:rotate(90deg)}
+    .mobile-menu a{
+      color:var(--text);text-decoration:none;
+      font-family:'Playfair Display',serif;
+      font-size:2rem;font-weight:700;
+      letter-spacing:.1em;
+      position:relative;
+      transition:color .3s;
+    }
+    .mobile-menu a::after{
+      content:'';position:absolute;bottom:-4px;left:0;
+      width:0;height:2px;background:var(--gold);
+      transition:width .4s var(--ease-out-quint);
+    }
+    .mobile-menu a:hover{color:var(--gold)}
+    .mobile-menu a:hover::after{width:100%}
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox{
+      position:fixed;inset:0;z-index:300;
+      background:rgba(26,26,26,.95);
+      backdrop-filter:blur(20px);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .4s;
+    }
+    .lightbox.open{opacity:1;pointer-events:all}
+    .lightbox img{
+      max-width:85vw;max-height:85vh;
+      border-radius:16px;
+      box-shadow:0 30px 80px rgba(0,0,0,.5);
+      transform:scale(.9);
+      transition:transform .5s var(--ease-out-quint);
+    }
+    .lightbox.open img{transform:scale(1)}
+    .lightbox-close{
+      position:absolute;top:2rem;right:2rem;
+      background:none;border:none;
+      color:var(--text);font-size:2.5rem;cursor:pointer;
+      transition:transform .3s;
+    }
+    .lightbox-close:hover{transform:rotate(90deg)}
+    .lightbox-nav{
+      position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.2);
+      color:var(--text);
+      width:50px;height:50px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:1.2rem;
+      transition:all .3s;
+    }
+    .lightbox-nav:hover{background:var(--gold);color:var(--burgundy-dark);border-color:var(--gold)}
+    .lightbox-prev{left:2rem}
+    .lightbox-next{right:2rem}
+
+    /* ===== TEXT REVEAL ===== */
+    .reveal-text{overflow:hidden}
+    .reveal-text span{
+      display:inline-block;
+      transform:translateY(110%);
+      transition:transform .8s var(--ease-out-quint);
+    }
+    .reveal-text.revealed span{transform:translateY(0)}
+
+    /* ===== MAGNETIC BUTTON ===== */
+    .magnetic{position:relative;display:inline-block}
+
+    /* ===== NOISE TEXTURE ===== */
+    .noise{
+      position:fixed;inset:0;z-index:9997;
+      pointer-events:none;opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== SMOOTH SCROLL INDICATOR ===== */
+    .progress-bar{
+      position:fixed;top:0;left:0;
+      width:0%;height:3px;
+      background:linear-gradient(90deg,var(--gold),var(--terracotta));
+      z-index:999;
+      transition:width .1s;
+    }
+
+    /* ===== COUNTER ANIMATION ===== */
+    .counter-row{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+      max-width:1300px;margin:4rem auto 0;
+      text-align:center;
+    }
+    .counter-item{
+      padding:2rem 1rem;
+      background:#1E1E1E;
+      border-radius:16px;
+      transition:all .4s var(--ease-out-quint);
+      border:1px solid rgba(255,255,255,.05);
+    }
+    .counter-item:hover{
+      transform:translateY(-5px);
+      box-shadow:0 15px 40px rgba(107,29,42,.1);
+    }
+    .counter-number{
+      font-family:'Playfair Display',serif;
+      font-size:3rem;font-weight:900;
+      color:var(--terracotta);line-height:1;
+    }
+    .counter-label{
+      font-size:.8rem;color:var(--text-light);
+      letter-spacing:.1em;text-transform:uppercase;
+      margin-top:.5rem;
+    }
+    @media(max-width:768px){
+      .counter-row{grid-template-columns:repeat(2,1fr);gap:1rem}
+      .counter-number{font-size:2rem}
+    }
+
+    /* ===== HOVER 3D TILT ===== */
+    .tilt-card{
+      transform-style:preserve-3d;
+      perspective:1000px;
+    }
+
+    /* ===== PARTICLE FIELD ===== */
+    .particles{
+      position:absolute;inset:0;overflow:hidden;pointer-events:none;
+    }
+    .particle{
+      position:absolute;
+      width:4px;height:4px;
+      background:var(--gold);
+      border-radius:50%;
+      opacity:.3;
+    }
+
+    /* ===== FLOATING BUTTONS ===== */
+    .floating-buttons{
+      position:fixed;bottom:2rem;left:2rem;
+      display:flex;flex-direction:column;gap:1rem;
+      z-index:99;
+    }
+    .floating-btn{
+      width:60px;height:60px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-size:1.6rem;
+      text-decoration:none;
+      box-shadow:0 6px 25px rgba(0,0,0,.3);
+      transition:all .3s var(--ease-out-quint);
+      position:relative;overflow:hidden;
+    }
+    .floating-btn::before{
+      content:'';position:absolute;inset:0;
+      border-radius:50%;
+      transform:scale(0);
+      transition:transform .3s var(--ease-out-quint);
+    }
+    .floating-btn:hover::before{transform:scale(1)}
+    .floating-btn:hover{transform:translateY(-5px);box-shadow:0 10px 35px rgba(0,0,0,.4)}
+    .whatsapp-btn{
+      background:#25D366;
+    }
+    .whatsapp-btn::before{
+      background:#1da851;
+    }
+    .whatsapp-btn svg{
+      width:30px;height:30px;fill:#fff;position:relative;z-index:1;
+    }
+    .instagram-btn{
+      background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+    }
+    .instagram-btn::before{
+      background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+      opacity:.8;
+    }
+    .instagram-btn svg{
+      width:28px;height:28px;fill:#fff;position:relative;z-index:1;
+    }
+    .floating-btn .tooltip{
+      position:absolute;left:calc(100% + 12px);
+      background:var(--charcoal);color:var(--text);
+      padding:.5rem 1rem;border-radius:8px;
+      font-size:.75rem;white-space:nowrap;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s,transform .3s;
+      transform:translateX(-10px);
+    }
+    .floating-btn:hover .tooltip{
+      opacity:1;transform:translateX(0);
+    }
+    @media(max-width:768px){
+      .floating-buttons{bottom:1.2rem;left:1rem;gap:.7rem}
+      .floating-btn{width:50px;height:50px}
+      .floating-btn svg{width:24px;height:24px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-logo">
+      <img src="logo.png" alt="Armorial Sabores"/>
+    </div>
+    <div class="preloader-text">Armorial Sabores</div>
+    <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+  </div>
+
+  <!-- Noise texture -->
+  <div class="noise"></div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+    <a href="#sobre" class="mobile-link">Sobre</a>
+    <a href="#galeria" class="mobile-link">Galeria</a>
+    <a href="#cardapio" class="mobile-link">Cardápio</a>
+    <a href="#depoimentos" class="mobile-link">Depoimentos</a>
+    <a href="#contato" class="mobile-link">Contato</a>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+    <img src="" alt="Galeria" id="lightboxImg"/>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="Armorial Sabores"/>
+      <span class="nav-logo-text">Armorial</span>
+    </a>
+    <div class="nav-links">
+      <a href="#sobre" class="nav-link">Sobre</a>
+      <a href="#galeria" class="nav-link">Galeria</a>
+      <a href="#cardapio" class="nav-link">Cardápio</a>
+      <a href="#depoimentos" class="nav-link">Depoimentos</a>
+      <a href="#contato" class="nav-link">Contato</a>
+      <a href="#contato" class="nav-cta"><span>Reservar Mesa</span></a>
+    </div>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="banner.jpg" alt="Armorial Sabores Banner"/>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="float-element float-1"></div>
+    <div class="float-element float-2"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Seg. a Sex. — 11h às 14h30
+      </div>
+      <h1 class="hero-title">
+        Armorial
+        <span>Sabores</span>
+      </h1>
+      <p class="hero-sub">Onde sabor encontra tradição! ☀️ 🍲</p>
+      <div class="hero-actions">
+        <a href="#cardapio" class="btn btn-primary"><span>Ver Cardápio</span></a>
+        <a href="#sobre" class="btn btn-outline">Nossa História</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-section">
+    <div class="marquee">
+      <div class="marquee-item">Onde sabor encontra tradição <span class="dot"></span></div>
+      <div class="marquee-item">Seg. a Sex. 11:00 às 14:30 <span class="dot"></span></div>
+      <div class="marquee-item">@armorialsabores <span class="dot"></span></div>
+      <div class="marquee-item">Armorial Sabores <span class="dot"></span></div>
+      <div class="marquee-item">Av. Barão do Triunfo, 276 — João Pessoa <span class="dot"></span></div>
+      <div class="marquee-item">Onde sabor encontra tradição <span class="dot"></span></div>
+      <div class="marquee-item">Seg. a Sex. 11:00 às 14:30 <span class="dot"></span></div>
+      <div class="marquee-item">@armorialsabores <span class="dot"></span></div>
+      <div class="marquee-item">Armorial Sabores <span class="dot"></span></div>
+      <div class="marquee-item">Av. Barão do Triunfo, 276 — João Pessoa <span class="dot"></span></div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="sobre">
+    <div class="about">
+      <div class="about-image" data-animate="fade-right">
+        <img src="buffet-1.jpg" alt="Restaurante Armorial Sabores"/>
+        <div class="about-image-overlay">
+          <div class="about-image-stat">
+            <strong> JP </strong>
+            <span>João Pessoa - PB</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text" data-animate="fade-left">
+        <div class="section-label">Sobre Nós</div>
+        <h2 class="section-title">
+          Onde sabor encontra
+          <span>tradição em cada prato</span>
+        </h2>
+        <p class="about-desc">
+          O Armorial Sabores é referência em self-service em João Pessoa.
+          Preparamos cada prato com ingredientes frescos e Seleção rigorosa,
+          trazendo o sabor da comida caseira de qualidade para o seu dia a dia.
+        </p>
+        <p class="about-desc">
+          Nosso buffet é renovado diariamente, com opções que incluem carnes grelhadas,
+          massas, saladas, pratos executivos e sobremesas que conquistam o paladar.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <span class="about-feature-icon">🍳</span>
+            <span class="about-feature-text">Cozinha Caseira</span>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">🥗</span>
+            <span class="about-feature-text">Ingredientes Frescos</span>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">⭐</span>
+            <span class="about-feature-text">Qualidade Premium</span>
+          </div>
+          <div class="about-feature">
+            <span class="about-feature-icon">💰</span>
+            <span class="about-feature-text">Preço Justo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Counters -->
+    <div class="counter-row">
+      <div class="counter-item" data-animate="fade-up">
+        <div class="counter-number" data-target="40">0</div>
+        <div class="counter-label">Opções no Buffet</div>
+      </div>
+      <div class="counter-item" data-animate="fade-up">
+        <div class="counter-number" data-target="500">0</div>
+        <div class="counter-label">Clientes Felizes</div>
+      </div>
+      <div class="counter-item" data-animate="fade-up">
+        <div class="counter-number" data-target="6">0</div>
+        <div class="counter-label">Dias por Semana</div>
+      </div>
+      <div class="counter-item" data-animate="fade-up">
+        <div class="counter-number" data-target="100">0</div>
+        <div class="counter-label">% Satisfação</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery-section" id="galeria">
+    <div class="gallery-header">
+      <div class="section-label" style="justify-content:center"><span>Nossa Cozinha</span></div>
+      <h2 class="section-title" style="color:var(--text)">
+        Nosso buffet em
+        <span style="color:var(--gold-light)">imagens</span>
+      </h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="buffet-1.jpg" alt="Buffet principal"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Buffet completo</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+          <img src="buffet-2.jpg" alt="Saladas"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Saladas frescas</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="buffet-3.jpg" alt="Massas"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Massas artesanais</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="buffet-4.jpg" alt="Carnes"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Carnes grelhadas</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+          <img src="buffet-5.jpg" alt="Sobremesas"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Sobremesas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="cardapio">
+    <div class="menu-section">
+      <div class="menu-header">
+        <div class="section-label" style="justify-content:center"><span>Cardápio</span></div>
+        <h2 class="section-title">
+          Nosso Cardápio
+          <span>feito com amor e dedicação</span>
+        </h2>
+        <div class="menu-categories">
+          <button class="menu-cat active">Todos</button>
+          <button class="menu-cat">Pratos Principais</button>
+          <button class="menu-cat">Acompanhamentos</button>
+          <button class="menu-cat">Saladas</button>
+          <button class="menu-cat">Sobremesas</button>
+        </div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card" data-animate="fade-up">
+          <div class="menu-card-img">
+            <img src="buffet-2.jpg" alt="Salada"/>
+            <span class="menu-card-badge">Saudável</span>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Salada Tropical</h3>
+            <p class="menu-card-desc">Mix de folhas, frutas da estação, nozes e molho balsâmico artesanal</p>
+          </div>
+        </div>
+        <div class="menu-card" data-animate="fade-up">
+          <div class="menu-card-img">
+            <img src="buffet-6.jpg" alt="Arroz"/>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Arroz à Grega</h3>
+            <p class="menu-card-desc">Arroz soltinho com legumes picados, passas e especiarias</p>
+          </div>
+        </div>
+        <div class="menu-card" data-animate="fade-up">
+          <div class="menu-card-img">
+            <img src="buffet-5.jpg" alt="Sobremesa"/>
+            <span class="menu-card-badge">Novo</span>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Pudim de Leite</h3>
+            <p class="menu-card-desc">Receita da vovó, cremoso e coberto com calda de caramelo irresistível</p>
+          </div>
+        </div>
+        <div class="menu-card" data-animate="fade-up">
+          <div class="menu-card-img">
+            <img src="buffet-1.jpg" alt="Feijão"/>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Feijão Tropeiro</h3>
+            <p class="menu-card-desc">Feijão carioca com farinha, linguiça calabresa, ovo e couve</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specials -->
+  <section class="specials">
+    <div class="specials-inner">
+      <div class="specials-text" data-animate="fade-right">
+        <div class="section-label">Destaques</div>
+        <h2 class="section-title">
+          Onde sabor encontra
+          <span>tradição</span>
+        </h2>
+        <p class="specials-desc">
+          Venha conferir nosso buffet completo com mais de 40 opções de pratos
+          preparados diariamente com ingredientes frescos e de qualidade.
+          Segunda a sexta, das 11h às 14h30.
+        </p>
+        <div class="specials-list">
+          <div class="specials-item" data-animate="fade-right">
+            <span class="specials-item-icon">🥩</span>
+            <div class="specials-item-text">
+              Carnes nobres na brasa
+              <small>Picanha, costela, alcatra e mais</small>
+            </div>
+          </div>
+          <div class="specials-item" data-animate="fade-right">
+            <span class="specials-item-icon">🍝</span>
+            <div class="specials-item-text">
+              Massas artesanais
+              <small>Feitas na casa com molhos especiais</small>
+            </div>
+          </div>
+          <div class="specials-item" data-animate="fade-right">
+            <span class="specials-item-icon">🥗</span>
+            <div class="specials-item-text">
+              Saladas variadas
+              <small>Folhas frescas e molhos da casa</small>
+            </div>
+          </div>
+          <div class="specials-item" data-animate="fade-right">
+            <span class="specials-item-icon">🍰</span>
+            <div class="specials-item-text">
+              Sobremesas caseiras
+              <small>Pavê, pudim, mousse e sorvetes</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="specials-images" data-animate="fade-left">
+        <div class="specials-img">
+          <img src="buffet-1.jpg" alt="Buffet"/>
+        </div>
+        <div class="specials-img">
+          <img src="buffet-4.jpg" alt="Carnes"/>
+        </div>
+        <div class="specials-img">
+        <img src="buffet-5.jpg" alt="Sobremesas"/>
+        </div>
+        <div class="specials-img">
+        <img src="buffet-2.jpg" alt="Saladas"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="depoimentos">
+    <div class="testimonials">
+      <div class="testimonials-header">
+        <div class="section-label" style="justify-content:center"><span>Depoimentos</span></div>
+        <h2 class="section-title">
+          O que dizem
+          <span>nossos clientes</span>
+        </h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" data-animate="fade-up">
+          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+          <p class="testimonial-text">
+            "Melhor self-service da região! A variedade é incrível e cada prato tem um sabor incrível.
+            Virei cliente fiel!"
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">M</div>
+            <div>
+              <div class="testimonial-name">Maria Clara</div>
+              <div class="testimonial-role">Cliente fiel</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-animate="fade-up">
+          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+          <p class="testimonial-text">
+            "A picanha deles é fora de serie! Sempre fresca e no ponto ideal.
+            O atendimento é excelente e o ambiente é muito acolhedor."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">R</div>
+            <div>
+              <div class="testimonial-name">Roberto Silva</div>
+              <div class="testimonial-role">Cliente fiel</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" data-animate="fade-up">
+          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
+          <p class="testimonial-text">
+            "Levo minha família toda semana. As crianças adoram as sobremesas
+            e eu fico tranquila com a qualidade dos alimentos."
+          </p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">A</div>
+            <div>
+              <div class="testimonial-name">Ana Beatriz</div>
+              <div class="testimonial-role">Cliente fiel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contato">
+    <div class="contact-inner">
+      <div class="contact-text" data-animate="fade-right">
+        <div class="section-label" style="color:var(--gold-light)"><span style="color:var(--gold-light)">Contato</span></div>
+        <h2 class="section-title">
+          Venha nos visitar
+          <span style="color:var(--gold-light)">estamos esperando por você</span>
+        </h2>
+        <p class="contact-desc">
+          Estamos prontos para recebê-lo com braços abertos e um buffet incrível.
+          Apareça na Avenida Barão do Triunfo, 276!
+        </p>
+        <div class="contact-info">
+          <div class="contact-info-item" data-animate="fade-right">
+            <span class="contact-info-icon">📍</span>
+            <div>
+              <div class="contact-info-label">Endereço</div>
+              <div class="contact-info-value">Avenida Barão do Triunfo, 276<br/>João Pessoa, PB — 58042-140</div>
+            </div>
+          </div>
+          <div class="contact-info-item" data-animate="fade-right">
+            <span class="contact-info-icon">📸</span>
+            <div>
+              <div class="contact-info-label">Instagram</div>
+              <div class="contact-info-value">@armorialsabores</div>
+            </div>
+          </div>
+          <div class="contact-info-item" data-animate="fade-right">
+            <span class="contact-info-icon">⏰</span>
+            <div>
+              <div class="contact-info-label">Horário</div>
+              <div class="contact-info-value">Seg. a Sex. — 11:00 às 14:30</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form" data-animate="fade-left">
+        <div class="form-group">
+          <input type="text" placeholder="Seu nome"/>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Seu e-mail"/>
+        </div>
+        <div class="form-group">
+          <input type="tel" placeholder="Telefone"/>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Sua mensagem..."></textarea>
+        </div>
+        <button class="form-submit">Enviar Mensagem</button>
+        <a href="https://wa.me/558391936795?text=Olá! Gostaria de fazer uma reserva no Armorial Sabores." target="_blank" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:.5rem;background:#25D366;border-color:#25D366">
+          <span>
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <div class="map-section">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.3!2d-34.86!3d-7.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMDcnMTIuMCJTIDM0wrA1MSczNi4wIlc!5e0!3m2!1spt-BR!2sbr!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="map-overlay"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo-text" style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1.5rem;letter-spacing:.15em">Armorial Sabores</div>
+        <p class="footer-desc">
+          Onde sabor encontra tradição. Self-service com a cara da nossa cozinha,
+          em João Pessoa.
+        </p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/armorialsabores/" target="_blank">ig</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Links Rápidos</h4>
+        <div class="footer-links">
+          <a href="#sobre" class="footer-link">Sobre Nós</a>
+          <a href="#galeria" class="footer-link">Galeria</a>
+          <a href="#cardapio" class="footer-link">Cardápio</a>
+          <a href="#depoimentos" class="footer-link">Depoimentos</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Horários</h4>
+        <div class="footer-links">
+          <span class="footer-link">Seg. a Sex: 11h às 14h30</span>
+          <span class="footer-link">Sáb, Dom e Feriados: Fechado</span>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Contato</h4>
+        <div class="footer-links">
+          <span class="footer-link">Av. Barão do Triunfo, 276</span>
+          <span class="footer-link">João Pessoa, PB — 58042-140</span>
+          <span class="footer-link">@armorialsabores</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Armorial Sabores. Todos os direitos reservados.</span>
+      <span>João Pessoa, PB</span>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop">↑</button>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons">
+    <a href="https://wa.me/558391936795" target="_blank" class="floating-btn whatsapp-btn" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span class="tooltip">Fale conosco no WhatsApp</span>
+    </a>
+    <a href="https://www.instagram.com/armorialsabores/" target="_blank" class="floating-btn instagram-btn" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span class="tooltip">Siga no Instagram</span>
+    </a>
+  </div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ===== PRELOADER =====
+    window.addEventListener('load', () => {
+      gsap.to('#preloader', {
+        opacity: 0,
+        duration: 0.6,
+        delay: 1.8,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          document.getElementById('preloader').style.display = 'none';
+          animateHero();
+          initParticles();
+        }
+      });
+    });
+
+    // ===== PROGRESS BAR =====
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    });
+
+    // ===== CURSOR =====
+    const cursor = document.getElementById('cursor');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.12;
+      cursorY += (mouseY - cursorY) * 0.12;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('a, button, .gallery-item, .menu-card, .testimonial-card, .counter-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+    });
+
+    // ===== NAV =====
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+      document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 600);
+    });
+
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== MOBILE MENU =====
+    const mobileMenu = document.getElementById('mobileMenu');
+    document.getElementById('hamburger').addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+      gsap.from('.mobile-menu a', {
+        opacity: 0, y: 40, stagger: 0.08, duration: 0.6, ease: 'power4.out', delay: 0.2
+      });
+    });
+    document.getElementById('mobileMenuClose').addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ===== LIGHTBOX =====
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    let currentGalleryIndex = 0;
+    const galleryImages = [];
+
+    document.querySelectorAll('.gallery-item').forEach((item, i) => {
+      const img = item.querySelector('img');
+      galleryImages.push(img.src);
+      item.addEventListener('click', () => {
+        currentGalleryIndex = i;
+        lightboxImg.src = galleryImages[currentGalleryIndex];
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightboxPrev').addEventListener('click', e => {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex - 1 + galleryImages.length) % galleryImages.length;
+      gsap.to(lightboxImg, { opacity: 0, scale: 0.96, duration: 0.25, ease: 'power2.inOut', onComplete: () => {
+        lightboxImg.src = galleryImages[currentGalleryIndex];
+        gsap.to(lightboxImg, { opacity: 1, scale: 1, duration: 0.4, ease: 'power4.out' });
+      }});
+    });
+
+    document.getElementById('lightboxNext').addEventListener('click', e => {
+      e.stopPropagation();
+      currentGalleryIndex = (currentGalleryIndex + 1) % galleryImages.length;
+      gsap.to(lightboxImg, { opacity: 0, scale: 0.96, duration: 0.25, ease: 'power2.inOut', onComplete: () => {
+        lightboxImg.src = galleryImages[currentGalleryIndex];
+        gsap.to(lightboxImg, { opacity: 1, scale: 1, duration: 0.4, ease: 'power4.out' });
+      }});
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') document.getElementById('lightboxPrev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lightboxNext').click();
+    });
+
+    // ===== HERO ANIMATION =====
+    function animateHero() {
+      const tl = gsap.timeline();
+      tl.from('.hero-bg img', { scale: 1.2, duration: 2.5, ease: 'power4.out' })
+        .from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, ease: 'power4.out' }, '-=1.5')
+        .from('.hero-title', { opacity: 0, y: 50, clipPath: 'inset(0 0 100% 0)', duration: 1.2, ease: 'power4.out' }, '-=0.6')
+        .from('.hero-sub', { opacity: 0, y: 30, duration: 0.9, ease: 'power4.out' }, '-=0.5')
+        .from('.hero-actions .btn', { opacity: 0, y: 20, stagger: 0.12, duration: 0.8, ease: 'power4.out' }, '-=0.4')
+        .from('.hero-scroll', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
+    }
+
+    // ===== PARALLAX HERO =====
+    gsap.to('.hero-bg img', {
+      yPercent: 15,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+
+    // ===== SECTION ANIMATIONS =====
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      const type = el.dataset.animate;
+      const from = {
+        'fade-up': { opacity: 0, y: 50 },
+        'fade-right': { opacity: 0, x: -50 },
+        'fade-left': { opacity: 0, x: 50 },
+        'scale-up': { opacity: 0, scale: 0.92 }
+      }[type];
+
+      gsap.from(el, {
+        ...from,
+        duration: 1.1,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // ===== COUNTER ANIMATION =====
+    document.querySelectorAll('.counter-number').forEach(counter => {
+      const target = parseInt(counter.dataset.target);
+      ScrollTrigger.create({
+        trigger: counter,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(counter, {
+            innerText: target,
+            duration: 2.5,
+            snap: { innerText: 1 },
+            ease: 'power3.out',
+            onUpdate: function() {
+              counter.textContent = Math.round(parseFloat(counter.textContent)) + '+';
+            }
+          });
+        }
+      });
+    });
+
+    // ===== MENU CARDS =====
+    gsap.from('.menu-card', {
+      opacity: 0, y: 60, stagger: 0.1, duration: 0.9, ease: 'power4.out',
+      scrollTrigger: { trigger: '.menu-grid', start: 'top 80%' }
+    });
+
+    // ===== TESTIMONIALS =====
+    gsap.from('.testimonial-card', {
+      opacity: 0, y: 50, stagger: 0.15, duration: 0.9, ease: 'power4.out',
+      scrollTrigger: { trigger: '.testimonials-grid', start: 'top 80%' }
+    });
+
+    // ===== SPECIALS =====
+    gsap.from('.specials-item', {
+      opacity: 0, x: -30, stagger: 0.1, duration: 0.8, ease: 'power4.out',
+      scrollTrigger: { trigger: '.specials-list', start: 'top 80%' }
+    });
+
+    // ===== GALLERY =====
+    gsap.from('.gallery-item', {
+      opacity: 0, scale: 0.88, stagger: 0.08, duration: 0.9, ease: 'power4.out',
+      scrollTrigger: { trigger: '.gallery-grid', start: 'top 80%' }
+    });
+
+    // ===== ABOUT FEATURES =====
+    gsap.from('.about-feature', {
+      opacity: 0, x: -25, stagger: 0.08, duration: 0.7, ease: 'power4.out',
+      scrollTrigger: { trigger: '.about-features', start: 'top 85%' }
+    });
+
+    // ===== CONTACT INFO =====
+    gsap.from('.contact-info-item', {
+      opacity: 0, x: -25, stagger: 0.08, duration: 0.7, ease: 'power4.out',
+      scrollTrigger: { trigger: '.contact-info', start: 'top 85%' }
+    });
+
+    // ===== COUNTER ITEMS =====
+    gsap.from('.counter-item', {
+      opacity: 0, y: 30, stagger: 0.1, duration: 0.8, ease: 'power4.out',
+      scrollTrigger: { trigger: '.counter-row', start: 'top 85%' }
+    });
+
+    // ===== 3D TILT ON CARDS =====
+    document.querySelectorAll('.menu-card, .testimonial-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 25;
+        const rotateY = (centerX - x) / 25;
+        gsap.to(card, {
+          rotationX: rotateX, rotationY: rotateY, y: -6,
+          duration: 0.4, ease: 'power3.out',
+          transformPerspective: 1000
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotationX: 0, rotationY: 0, y: 0,
+          duration: 0.6, ease: 'power4.out',
+          transformPerspective: 1000
+        });
+      });
+    });
+
+    // ===== MAGNETIC BUTTONS =====
+    document.querySelectorAll('.btn, .nav-cta').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 0.3, ease: 'power3.out' });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+      });
+    });
+
+    // ===== PARTICLES =====
+    function initParticles() {
+      const hero = document.querySelector('.hero');
+      const particleContainer = document.createElement('div');
+      particleContainer.className = 'particles';
+      hero.appendChild(particleContainer);
+
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.width = (Math.random() * 4 + 2) + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.opacity = Math.random() * 0.3 + 0.1;
+        particleContainer.appendChild(particle);
+
+        gsap.to(particle, {
+          y: -100 - Math.random() * 200,
+          x: (Math.random() - 0.5) * 100,
+          opacity: 0,
+          duration: 3 + Math.random() * 4,
+          repeat: -1,
+          delay: Math.random() * 3,
+          ease: 'power1.out'
+        });
+      }
+    }
+
+    // ===== MARQUEE =====
+    const marquee = document.querySelector('.marquee');
+    const marqueeContent = marquee.innerHTML;
+    marquee.innerHTML = marqueeContent + marqueeContent;
+
+    // ===== SMOOTH ANCHOR SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          gsap.to(window, {
+            scrollTo: { y: target, offsetY: 80 },
+            duration: 1.4,
+            ease: 'power4.inOut'
+          });
+        }
+      });
+    });
+
+    // ===== TEXT SPLIT & REVEAL ON SCROLL =====
+    document.querySelectorAll('.section-title').forEach(title => {
+      const text = title.textContent;
+      const words = text.split(' ');
+      title.innerHTML = words.map(w => `<span style="display:inline-block;overflow:hidden"><span style="display:inline-block">${w}</span></span>`).join(' ');
+      gsap.from(title.querySelectorAll('span > span'), {
+        opacity: 0, y: 35, stagger: 0.04, duration: 0.7, ease: 'power4.out',
+        scrollTrigger: { trigger: title, start: 'top 85%' }
+      });
+    });
+
+    // ===== FORM LABEL FLOAT =====
+    document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
+      input.addEventListener('focus', () => {
+        gsap.to(input, { borderColor: '#D4A853', duration: 0.3 });
+      });
+      input.addEventListener('blur', () => {
+        if (!input.value) {
+          gsap.to(input, { borderColor: 'rgba(255,255,255,.1)', duration: 0.3 });
+        }
+      });
+    });
+
+    // ===== GALLERY HOVER PARALLAX =====
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      const img = item.querySelector('img');
+      item.addEventListener('mousemove', e => {
+        const rect = item.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(img, { x: x * 12, y: y * 12, duration: 0.6, ease: 'power3.out' });
+      });
+      item.addEventListener('mouseleave', () => {
+        gsap.to(img, { x: 0, y: 0, duration: 0.8, ease: 'power4.out' });
+      });
+    });
+
+    // ===== SPECIALS IMAGES PARALLAX =====
+    document.querySelectorAll('.specials-img').forEach((img, i) => {
+      gsap.to(img, {
+        y: (i % 2 === 0 ? -20 : 20),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.specials-images',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
+        }
+      });
+    });
+
+    // ===== MENU FILTER =====
+    document.querySelectorAll('.menu-cat').forEach(cat => {
+      cat.addEventListener('click', function() {
+        document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        gsap.from('.menu-card', {
+          opacity: 0, y: 25, scale: 0.97, stagger: 0.06, duration: 0.5, ease: 'power4.out'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
