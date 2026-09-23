@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Armorial Sabores | Self-Service</title>
+  <meta name="description" content="Armorial Sabores — self-service em João Pessoa com mais de 40 opções diárias. Av. Barão do Triunfo, 276. Seg a Sex, 11h às 14h30."/>
+  <meta name="theme-color" content="#6B1D2A"/>
+  <title>Armorial Sabores | Self-Service em João Pessoa</title>
   <link rel="icon" type="image/png" href="logo.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap"/>
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
@@ -645,55 +647,6 @@
     .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
     .gallery-item:nth-child(4){grid-column:span 2}
 
-    /* ===== TESTIMONIALS ===== */
-    .testimonials{
-      max-width:1300px;margin:0 auto;
-    }
-    .testimonials-header{text-align:center;margin-bottom:2.5rem}
-    .testimonials-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
-    }
-    .testimonial-card{
-      padding:2rem;
-      background:var(--card-bg);
-      border-radius:20px;
-      transition:all .4s var(--ease-out-quint);
-      position:relative;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow-sm);
-    }
-    .testimonial-card::before{
-      content:'"';position:absolute;top:1rem;right:1.5rem;
-      font-family:'Playfair Display',serif;
-      font-size:5rem;color:rgba(200,150,62,.12);
-      line-height:1;
-    }
-    .testimonial-card:hover{
-      transform:translateY(-8px);
-      box-shadow:var(--shadow-md);
-    }
-    .testimonial-stars{
-      color:var(--gold);font-size:.9rem;
-      letter-spacing:.2em;margin-bottom:1rem;
-    }
-    .testimonial-text{
-      font-size:1rem;line-height:1.7;
-      color:var(--text);
-      margin-bottom:1.5rem;
-      font-style:italic;
-    }
-    .testimonial-author{
-      display:flex;align-items:center;gap:1rem;
-    }
-    .testimonial-avatar{
-      width:48px;height:48px;border-radius:50%;
-      background:linear-gradient(135deg,var(--burgundy),var(--gold));
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;font-weight:700;font-size:1rem;
-    }
-    .testimonial-name{font-weight:600;font-size:.9rem;color:var(--text)}
-    .testimonial-role{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
-
     /* ===== CONTACT ===== */
     .contact{
       background:var(--section-alt);
@@ -880,7 +833,6 @@
       .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
       .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 1}
       .menu-grid{grid-template-columns:1fr}
-      .testimonials-grid{grid-template-columns:1fr}
       .footer-inner{grid-template-columns:1fr 1fr}
       .counter-row{grid-template-columns:repeat(2,1fr)}
     }
@@ -1101,7 +1053,6 @@
     <a href="#sobre" class="mobile-link">Sobre</a>
     <a href="#cardapio" class="mobile-link">Cardápio</a>
     <a href="#galeria" class="mobile-link">Galeria</a>
-    <a href="#depoimentos" class="mobile-link">Depoimentos</a>
     <a href="#contato" class="mobile-link">Contato</a>
   </div>
 
@@ -1127,7 +1078,6 @@
       <a href="#sobre" class="nav-link">Sobre</a>
       <a href="#cardapio" class="nav-link">Cardápio</a>
       <a href="#galeria" class="nav-link">Galeria</a>
-      <a href="#depoimentos" class="nav-link">Depoimentos</a>
       <a href="#contato" class="nav-link">Contato</a>
     </div>
     <div class="nav-hamburger" id="hamburger">
@@ -1241,7 +1191,7 @@
   <section id="sobre">
     <div class="about">
       <div class="about-image" data-animate="fade-right">
-        <img src="foto-10.jpg" alt="Restaurante Armorial Sabores"/>
+        <img src="foto-10.jpg" alt="Restaurante Armorial Sabores" loading="lazy"/>
         <div class="about-image-overlay">
           <div class="about-image-stat">
             <strong> JP </strong>
@@ -1262,7 +1212,7 @@
         </p>
         <p class="about-desc">
           Nosso buffet é renovado diariamente, com mais de 40 opções que incluem
-          carnes grelhadas, massas, saladas, pratos executivos e sobremesas.
+          pratos variados, massas, saladas e sobremesas.
           Venha se servir, pague por quilo e levante satisfeito!
         </p>
         <div class="about-features">
@@ -1359,7 +1309,6 @@
           <div class="menu-card-icon">🥩</div>
           <div class="menu-card-body">
             <h3 class="menu-card-title">Pratos Variados</h3>
-            <p class="menu-card-desc">Cortes nobres na brasa, no ponto que você escolher</p>
           </div>
           <span class="menu-card-badge">Destaque</span>
         </div>
@@ -1429,94 +1378,117 @@
     </div>
     <div class="gallery-grid">
       <div class="gallery-item" data-animate="scale-up">
-        <img src="foto-05.jpg" alt="Buffet principal"/>
+        <img src="foto-05.jpg" alt="Buffet principal" loading="lazy"/>
         <div class="gallery-item-overlay">
           <div class="gallery-item-text">Buffet completo</div>
         </div>
       </div>
       <div class="gallery-item" data-animate="scale-up">
-          <img src="foto-06.jpg" alt="Saladas"/>
+          <img src="foto-06.jpg" alt="Saladas" loading="lazy"/>
         <div class="gallery-item-overlay">
           <div class="gallery-item-text">Saladas frescas</div>
         </div>
       </div>
       <div class="gallery-item" data-animate="scale-up">
-        <img src="foto-07.jpg" alt="Massas"/>
+        <img src="foto-07.jpg" alt="Massas" loading="lazy"/>
         <div class="gallery-item-overlay">
           <div class="gallery-item-text">Massas artesanais</div>
         </div>
       </div>
       <div class="gallery-item" data-animate="scale-up">
-        <img src="foto-08.jpg" alt="Carnes"/>
+        <img src="foto-08.jpg" alt="Pratos quentes" loading="lazy"/>
         <div class="gallery-item-overlay">
-          <div class="gallery-item-text">Carnes grelhadas</div>
+          <div class="gallery-item-text">Pratos quentes</div>
         </div>
       </div>
       <div class="gallery-item" data-animate="scale-up">
-          <img src="foto-09.jpg" alt="Sobremesas"/>
+          <img src="foto-09.jpg" alt="Sobremesas" loading="lazy"/>
         <div class="gallery-item-overlay">
           <div class="gallery-item-text">Sobremesas</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-11.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Buffet variado</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-12.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Sabor do dia</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-13.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Opções frescas</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-14.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Pratos da casa</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-15.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Monte seu prato</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-16.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Cozinha completa</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-17.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Variedade todos os dias</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-18.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Quilo da felicidade</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-19.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Sabores variados</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-20.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Qualidade garantida</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-21.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Para todos os gostos</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-22.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Comida de verdade</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-animate="scale-up">
+        <img src="foto-23.jpg" alt="Buffet" loading="lazy"/>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-text">Venha conferir</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section id="depoimentos">
-    <div class="testimonials">
-      <div class="testimonials-header">
-        <div class="section-label" style="justify-content:center"><span>Depoimentos</span></div>
-        <h2 class="section-title">
-          O que dizem
-          <span>nossos clientes</span>
-        </h2>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card" data-animate="fade-up">
-          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-          <p class="testimonial-text">
-            "Melhor self-service da região! A variedade é incrível e cada prato tem um sabor incrível.
-            Virei cliente fiel!"
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">M</div>
-            <div>
-              <div class="testimonial-name">Maria Clara</div>
-              <div class="testimonial-role">Cliente fiel</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card" data-animate="fade-up">
-          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-          <p class="testimonial-text">
-            "A picanha deles é fora de serie! Sempre fresca e no ponto ideal.
-            O atendimento é excelente e o ambiente é muito acolhedor."
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">R</div>
-            <div>
-              <div class="testimonial-name">Roberto Silva</div>
-              <div class="testimonial-role">Cliente fiel</div>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card" data-animate="fade-up">
-          <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-          <p class="testimonial-text">
-            "Levo minha família toda semana. As crianças adoram as sobremesas
-            e eu fico tranquila com a qualidade dos alimentos."
-          </p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">A</div>
-            <div>
-              <div class="testimonial-name">Ana Beatriz</div>
-              <div class="testimonial-role">Cliente fiel</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Contact -->
   <section class="contact" id="contato">
@@ -1612,7 +1584,6 @@
           <a href="#sobre" class="footer-link">Sobre Nós</a>
           <a href="#cardapio" class="footer-link">Cardápio</a>
           <a href="#galeria" class="footer-link">Galeria</a>
-          <a href="#depoimentos" class="footer-link">Depoimentos</a>
         </div>
       </div>
       <div>
@@ -1702,7 +1673,7 @@
     }
     animateCursor();
 
-    document.querySelectorAll('a, button, .gallery-item, .menu-card, .testimonial-card, .counter-item, .buffet-card').forEach(el => {
+    document.querySelectorAll('a, button, .gallery-item, .menu-card, .counter-item, .buffet-card').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('active'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
     });
@@ -1865,13 +1836,6 @@
       opacity: 0, y: 60, stagger: 0.1, duration: 0.9, ease: 'power4.out',
       scrollTrigger: { trigger: '.menu-grid', start: 'top 80%' }
     });
-
-    // ===== TESTIMONIALS =====
-    gsap.from('.testimonial-card', {
-      opacity: 0, y: 50, stagger: 0.15, duration: 0.9, ease: 'power4.out',
-      scrollTrigger: { trigger: '.testimonials-grid', start: 'top 80%' }
-    });
-
     // ===== GALLERY =====
     gsap.from('.gallery-item', {
       opacity: 0, scale: 0.88, stagger: 0.08, duration: 0.9, ease: 'power4.out',
@@ -1897,7 +1861,7 @@
     });
 
     // ===== 3D TILT ON CARDS =====
-    document.querySelectorAll('.menu-card, .testimonial-card, .buffet-card').forEach(card => {
+    document.querySelectorAll('.menu-card, .buffet-card').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
